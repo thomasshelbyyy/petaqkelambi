@@ -1,4 +1,8 @@
 import Link from "next/link"
+
+export const metadata = {
+  title: "Home"
+}
 const Home = () => {
   return (
     <div className="w-screen h-screen flex gap-8 justify-center items-center">

@@ -2,12 +2,20 @@
 
 import { ShoppingCartIcon } from "@heroicons/react/24/solid"
 import { useSession } from "next-auth/react"
+import Swal from "sweetalert2"
 
 export default function AddToCartButton({ productId, productName, image, price }) {
     const { data: session, status } = useSession()
     const handleAddtoCart = async () => {
         if (status === "unauthenticated") {
-            alert("please login before add this to your wishlist")
+            Swal.fire({
+                icon: "error",
+                text: "Please login to add this product to cart",
+                timer: 1500,
+                toast: true,
+                timerProgressBar: true,
+                showConfirmButton: false
+            })
         } else {
             try {
                 const userId = session?.user?.id || ""
@@ -25,9 +33,26 @@ export default function AddToCartButton({ productId, productName, image, price }
                 const response = await res.json()
 
                 if (response.status) {
-                    alert("Product added to cart")
+                    Swal.fire({
+                        icon: "success",
+                        text: "Product succesfully added to cart",
+                        timer: 3000,
+                        toast: true,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        position: "top-end"
+                    })
                 } else {
-                    alert(response.message)
+                    Swal.fire({
+                        icon: "error",
+                        text: "Failed to add product to cart",
+                        timer: 1500,
+                        toast: true,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        position: "top-end",
+                        backdrop: false
+                    })
                 }
             } catch (error) {
                 console.log(error)
