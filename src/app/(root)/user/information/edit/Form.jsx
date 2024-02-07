@@ -56,7 +56,6 @@ export default function EditUserForm({ user, id }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const isFormValid = validateForm()
-        console.log({ isFormValid, errors })
         if (isFormValid) {
             const data = {
                 firstName: firstName,
@@ -78,8 +77,6 @@ export default function EditUserForm({ user, id }) {
                 })
 
                 const response = await res.json()
-
-                console.log(response)
 
                 if (res.ok) {
                     alert("user updated")

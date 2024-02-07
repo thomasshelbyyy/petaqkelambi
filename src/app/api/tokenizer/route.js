@@ -56,7 +56,6 @@ export async function POST(request) {
             if (res.status) {
                 return NextResponse.json({ token })
             } else {
-                console.log(res.message)
                 return NextResponse.json({ status: false, message: res.message })
             }
         } catch (error) {

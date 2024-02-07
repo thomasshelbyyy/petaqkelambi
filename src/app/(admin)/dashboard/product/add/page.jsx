@@ -59,10 +59,6 @@ export default function DashboardProductAddNew() {
     return Object.keys(newErrors).length === 0
   }
 
-  useEffect(() => {
-    console.log(description)
-  }, [description])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true)

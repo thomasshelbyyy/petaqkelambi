@@ -26,7 +26,6 @@ export default async function TranactionsPage() {
     const session = await getServerSession(authOptions)
     const data = await getData(`${baseUrl}/api/transaction?user_id=${session.user.id}`)
 
-    console.log(data)
     return (
         <div className="min-h-screen w-full flex justify-center">
             <div className="w-11/12 md:w-8/12 rounded-ld bg-gray-800 text-gray-300 p-6">

@@ -130,7 +130,6 @@ export default function CartCard({ cart, user, userId }) {
         })
 
         const reqData = await res.json()
-        console.log(reqData)
         window.snap.pay(reqData.token)
     }
     return (

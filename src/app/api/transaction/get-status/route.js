@@ -16,7 +16,6 @@ export async function GET(request) {
             }
         })
         const data = await res.json()
-        console.log(data)
         return NextResponse.json({ status: true })
     } catch (error) {
         return NextResponse.json({ status: false, message: "error: " + error })
