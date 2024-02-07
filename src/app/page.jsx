@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 export const metadata = {
-  title: "Home"
+  title: "Home | Petaqkelambi"
 }
 const Home = () => {
   return (

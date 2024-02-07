@@ -6,7 +6,9 @@ export default async function ProductsComponent({ params }) {
     const getProducts = await getData('http://localhost:3000/api/products');
     const reviews = await getData('http://localhost:3000/api/review')
 
+    console.log({ getProducts })
     const products = getProducts.data
+
     const category = params.slug[1] || "top"
 
     const productsByCategory = products.filter(product => product.gender.toLowerCase() === params.slug[0] && product.category.toLowerCase() === category)

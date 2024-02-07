@@ -55,18 +55,22 @@ export default function Navbar() {
                                                 Dashboard
                                             </Link>
                                         )}
-                                        <Link
-                                            href="/user/information"
-                                            className={`rounded-md px-3 py-2 text-sm font-medium ${pathname === "/user/information" || pathname === "/user/transactions" ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white"}`}
-                                        >
-                                            Profile
-                                        </Link>
-                                        <Link
-                                            href="/user/carts"
-                                            className={`rounded-md px-3 py-2 text-sm font-medium ${pathname === "/user/carts" ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white"}`}
-                                        >
-                                            <ShoppingCartIcon className="w-6" />
-                                        </Link>
+                                        {session?.user && (
+                                            <>
+                                                <Link
+                                                    href="/user/information"
+                                                    className={`rounded-md px-3 py-2 text-sm font-medium ${pathname === "/user/information" || pathname === "/user/transactions" ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white"}`}
+                                                >
+                                                    Profile
+                                                </Link>
+                                                <Link
+                                                    href="/user/carts"
+                                                    className={`rounded-md px-3 py-2 text-sm font-medium ${pathname === "/user/carts" ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white"}`}
+                                                >
+                                                    <ShoppingCartIcon className="w-6" />
+                                                </Link>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -88,27 +92,33 @@ export default function Navbar() {
 
                     <Disclosure.Panel className="sm:hidden">
                         <div className="space-y-1 px-2 pb-3 pt-2">
-                            <Disclosure.Button
-                                as="a"
-                                href="/dashboard"
-                                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                            >
-                                Dashboard
-                            </Disclosure.Button>
-                            <Disclosure.Button
-                                as="a"
-                                href="/user/information"
-                                className={`block rounded-md px-3 py-2 text-base font-medium ${pathname === "/user/information" || pathname === "/user/transactions" ? "text-gray-300 hover:bg-gray-700 hover:text-white" : "bg-gray-900 text-white"} `}
-                            >
-                                Profile
-                            </Disclosure.Button>
-                            <Disclosure.Button
-                                as="a"
-                                href="/user/carts"
-                                className={`block rounded-md px-3 py-2 text-base font-medium ${pathname === "/user/carts" ? "text-gray-300 hover:bg-gray-700 hover:text-white" : "bg-gray-900 text-white"} `}
-                            >
-                                <ShoppingCartIcon className="w-6" />
-                            </Disclosure.Button>
+                            {session?.user?.role === "admin" && (
+                                <Disclosure.Button
+                                    as="a"
+                                    href="/dashboard"
+                                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                                >
+                                    Dashboard
+                                </Disclosure.Button>
+                            )}
+                            {session?.user && (
+                                <>
+                                    <Disclosure.Button
+                                        as="a"
+                                        href="/user/information"
+                                        className={`block rounded-md px-3 py-2 text-base font-medium ${pathname === "/user/information" || pathname === "/user/transactions" ? "text-gray-300 hover:bg-gray-700 hover:text-white" : "bg-gray-900 text-white"} `}
+                                    >
+                                        Profile
+                                    </Disclosure.Button>
+                                    <Disclosure.Button
+                                        as="a"
+                                        href="/user/carts"
+                                        className={`block rounded-md px-3 py-2 text-base font-medium ${pathname === "/user/carts" ? "text-gray-300 hover:bg-gray-700 hover:text-white" : "bg-gray-900 text-white"} `}
+                                    >
+                                        <ShoppingCartIcon className="w-6" />
+                                    </Disclosure.Button>
+                                </>
+                            )}
                         </div>
                     </Disclosure.Panel>
                 </>

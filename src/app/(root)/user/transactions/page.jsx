@@ -17,6 +17,10 @@ const timestampToDate = (timestamp) => {
     return formattedDate
 }
 
+export const metadata = {
+    title: "User Transactions | Petaqkelambi"
+}
+
 export default async function TranactionsPage() {
     const session = await getServerSession(authOptions)
     const data = await getData(`http://localhost:3000/api/transaction?user_id=${session.user.id}`)

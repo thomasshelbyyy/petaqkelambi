@@ -27,7 +27,7 @@ export default function ReviewsComponent({ reviews }) {
             setFilteredReviews(reviews.filter(review => review.rating == starFilter))
         }
         console.log({ starFilter })
-    }, [starFilter])
+    }, [starFilter, reviews])
 
     return (
         <>

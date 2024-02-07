@@ -1,16 +1,9 @@
 import DashboardProductsTable from "@/components/DashboardProductsTable"
+import { getData } from "@/lib/fetch/service"
 import Link from "next/link"
 
-const getData = async () => {
-    const res = await fetch("http://localhost:3000/api/products", {
-        cache: "no-store"
-    })
-
-    return res.json()
-}
-
 export default async function DashboardProductPage() {
-    const products = await getData()
+    const products = await getData("http://localhost:3000/api/products")
 
     return (
         <div className="p-4">
@@ -38,7 +31,7 @@ export default async function DashboardProductPage() {
                 </div>
             </div>
 
-            <DashboardProductsTable products={products.data} />
+            <DashboardProductsTable products={products?.data} />
         </div>
     )
 }

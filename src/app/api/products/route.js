@@ -8,6 +8,6 @@ export async function GET(request) {
         return Response.json({ status: 200, message: "success", data: data })
     } else {
         const data = await retrieveData("products")
-        return Response.json({ status: 200, message: "success", data })
+        return Response.json({ status: 200, message: "success", data: data })
     }
 }

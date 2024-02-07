@@ -21,6 +21,15 @@ const timestampToDate = (timestamp) => {
     return formattedDate
 }
 
+export async function generateMetadata({ params }) {
+    const getProduct = await getData(`http://localhost:3000/api/products?id=${params.id}`)
+    const product = getProduct.data
+
+    return {
+        title: `${product.name} detail | Petaqkelambi`
+    }
+}
+
 const ProductDetail = async ({ params }) => {
     const getProduct = await getData(`http://localhost:3000/api/products?id=${params.id}`)
     const product = getProduct.data
@@ -45,6 +54,7 @@ const ProductDetail = async ({ params }) => {
     const sumRating = reviews.reduce((sum, review) => sum + review.rating, 0)
     const averageRating = sumRating / reviews.length
     const succeedTransactions = transactions.length > 0 ? transactions.data.filter(transaction => transaction.status === "settlement") : []
+    const showRateModal = transactions.length > 0 && succeedTransactions?.length > 0
 
     return (
         <main className="w-screen flex flex-col items-center py-4 bg-gray-300">
@@ -88,45 +98,48 @@ const ProductDetail = async ({ params }) => {
             </div>
 
             <div className="w-11/12 mt-5 bg-white rounded-lg p-8">
-
-                {session?.user && loggedInUserReview.hasOwnProperty("product_id") ? (
-                    <div className="py-4 px-8 bg-gray-200 border border-gray-400 rounded-lg max-w-2xl">
-                        <div className="flex justify-between items-center">
-                            <div className="flex">
-                                <p className="font-medium text-gray-800">{loggedInUserReview.username}</p>
+                {session?.user ? (
+                    loggedInUserReview.hasOwnProperty("product_id") ? (
+                        <div className="py-4 px-8 bg-gray-200 border border-gray-400 rounded-lg max-w-2xl">
+                            <div className="flex justify-between items-center">
+                                <div className="flex">
+                                    <p className="font-medium text-gray-800">{loggedInUserReview.username}</p>
+                                </div>
+                                <div className="flex">
+                                    {[1, 2, 3, 4, 5].map(icon => (
+                                        <StarIcon key={icon} className={`w-6 ${icon <= loggedInUserReview.rating ? "text-yellow-300" : ""}`} />
+                                    ))}
+                                </div>
                             </div>
-                            <div className="flex">
-                                {[1, 2, 3, 4, 5].map(icon => (
-                                    <StarIcon key={icon} className={`w-6 ${icon <= loggedInUserReview.rating ? "text-yellow-300" : ""}`} />
-                                ))}
+
+                            <p className="my-3">{loggedInUserReview.review}</p>
+                            <div className="flex justify-between">
+                                <div className="flex">
+                                    <EditReviewModal
+                                        userId={session.user.id}
+                                        username={session.user.username}
+                                        productId={params.id}
+                                        productName={product.name}
+                                        oldRating={loggedInUserReview.rating}
+                                        oldReview={loggedInUserReview.review}
+                                        reviewId={loggedInUserReview.id}
+                                    />
+                                    <DeleteReviewButton reviewId={loggedInUserReview.id} />
+                                </div>
+                                <p>{timestampToDate(loggedInUserReview.date.seconds)}</p>
                             </div>
                         </div>
-
-                        <p className="my-3">{loggedInUserReview.review}</p>
-                        <div className="flex justify-between">
-                            <div className="flex">
-                                <EditReviewModal
-                                    userId={session.user.id}
-                                    username={session.user.username}
-                                    productId={params.id}
-                                    productName={product.name}
-                                    oldRating={loggedInUserReview.rating}
-                                    oldReview={loggedInUserReview.review}
-                                    reviewId={loggedInUserReview.id}
-                                />
-                                <DeleteReviewButton reviewId={loggedInUserReview.id} />
-                            </div>
-                            <p>{timestampToDate(loggedInUserReview.date.seconds)}</p>
-                        </div>
-                    </div>
-                ) : (
-                    <RateModal
-                        userId={session.user.id}
-                        username={session.user.username}
-                        productId={params.id}
-                        productName={product.name}
-                    />
-                )}
+                    ) : (
+                        showRateModal ? (
+                            <RateModal
+                                userId={session?.user.id}
+                                username={session?.user.username}
+                                productId={params.id}
+                                productName={product.name}
+                            />
+                        ) : null
+                    )
+                ) : null}
                 <ReviewsComponent reviews={reviews} />
             </div>
         </main>

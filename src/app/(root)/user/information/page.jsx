@@ -12,6 +12,10 @@ const getData = async (id) => {
     return res.json()
 }
 
+export const metadata = {
+    title: "User Profile | Petaqkelambi"
+}
+
 export default async function UserInformationPage() {
 
     const session = await getServerSession(authOptions)

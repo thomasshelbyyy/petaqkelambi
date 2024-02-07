@@ -10,6 +10,10 @@ const getData = async (id) => {
     return res.json()
 }
 
+export const metadata = {
+    title: "Edit Profile | Petaqkelambi"
+}
+
 export default async function EditUserInformationPage() {
 
     const session = await getServerSession(authOptions)
