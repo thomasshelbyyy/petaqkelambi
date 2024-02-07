@@ -22,7 +22,8 @@ const timestampToDate = (timestamp) => {
 }
 
 export async function generateMetadata({ params }) {
-    const getProduct = await getData(`http://localhost:3000/api/products?id=${params.id}`)
+    const baseUrl = process.env.BASE_URL
+    const getProduct = await getData(`${baseUrl}/api/products?id=${params.id}`)
     const product = getProduct.data
 
     return {
@@ -31,10 +32,11 @@ export async function generateMetadata({ params }) {
 }
 
 const ProductDetail = async ({ params }) => {
-    const getProduct = await getData(`http://localhost:3000/api/products?id=${params.id}`)
+    const baseUrl = process.env.BASE_URL
+    const getProduct = await getData(`${baseUrl}/api/products?id=${params.id}`)
     const product = getProduct.data
 
-    const getReviews = await getData(`http://localhost:3000/api/review?product_id=${params.id}`)
+    const getReviews = await getData(`${baseUrl}/api/review?product_id=${params.id}`)
     const reviews = getReviews.data || []
 
     const session = await getServerSession(authOptions)
@@ -43,7 +45,7 @@ const ProductDetail = async ({ params }) => {
     let otherUsersReview = []
     let loggedInUserReview = {}
     if (session?.user) {
-        transactions = await getData(`http://localhost:3000/api/transaction?user_id=${session.user.id}`)
+        transactions = await getData(`${baseUrl}/api/transaction?user_id=${session.user.id}`)
 
         otherUsersReview = reviews.filter(review => review.user_id !== session.user.id) || []
         loggedInUserReview = reviews.find(review => review.user_id === session.user.id) || []

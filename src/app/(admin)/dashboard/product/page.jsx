@@ -3,7 +3,8 @@ import { getData } from "@/lib/fetch/service"
 import Link from "next/link"
 
 export default async function DashboardProductPage() {
-    const products = await getData("http://localhost:3000/api/products")
+    const baseUrl = process.env.BASE_URL
+    const products = await getData(`${baseUrl}/api/products`)
 
     return (
         <div className="p-4">

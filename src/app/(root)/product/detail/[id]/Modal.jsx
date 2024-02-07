@@ -22,13 +22,14 @@ export default function RateModal({ userId, username, productId, productName }) 
     }
 
     const handleSubmit = async (e) => {
+        const baseUrl = process.env.BASE_URL
         e.preventDefault()
         const data = {
             productId, productName, userId, username, rating, review
         }
 
         try {
-            const res = await fetch("http://localhost:3000/api/review/add", {
+            const res = await fetch(`${baseUrl}/api/review/add`, {
                 method: "POST",
                 body: JSON.stringify(data)
             })

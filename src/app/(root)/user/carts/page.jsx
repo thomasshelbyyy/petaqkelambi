@@ -8,9 +8,10 @@ export const metadata = {
 }
 
 export default async function UserCart() {
+    const baseUrl = process.env.BASE_URL
     const session = await getServerSession(authOptions)
-    const carts = await getData("http://localhost:3000/api/user/cart?id=" + session.user.id)
-    const user = await getData("http://localhost:3000/api/user?id=" + session.user.id)
+    const carts = await getData(`${baseUrl}/api/user/cart?id=${session.user.id}`)
+    const user = await getData(`${baseUrl}/api/user?id=${session.user.id}`)
 
     return (
         <div className="min-h-screen w-full flex justify-center">

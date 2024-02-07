@@ -12,6 +12,7 @@ const genders = ["Male", "Female", "Kid"]
 const categories = ["Top", "Bottom", "Shoes", "Hat", "Accessories"]
 
 export default function EditProductForm({ product, id }) {
+    const baseUrl = process.env.BASE_URL
     const { push } = useRouter()
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -73,7 +74,7 @@ export default function EditProductForm({ product, id }) {
             }
 
             try {
-                const res = await fetch("http://localhost:3000/api/products/update", {
+                const res = await fetch(`${baseUrl}/api/products/update`, {
                     method: "PUT",
                     body: JSON.stringify(productData)
                 })

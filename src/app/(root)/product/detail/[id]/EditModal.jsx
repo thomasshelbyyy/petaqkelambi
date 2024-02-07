@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 export default function EditReviewModal({ reviewId, userId, username, productId, productName, oldRating, oldReview }) {
+    const baseUrl = process.env.BASE_URL
     const [showModal, setShowModal] = useState(false)
     const [rating, setRating] = useState(oldRating)
     const [hoveredRating, setHoveredRating] = useState(0)
@@ -31,7 +32,7 @@ export default function EditReviewModal({ reviewId, userId, username, productId,
         }
 
         try {
-            const res = await fetch("http://localhost:3000/api/review/update", {
+            const res = await fetch(`${baseUrl}/api/review/update`, {
                 method: "PUT",
                 body: JSON.stringify(data)
             })

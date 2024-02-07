@@ -22,8 +22,9 @@ export const metadata = {
 }
 
 export default async function TranactionsPage() {
+    const baseUrl = process.env.BASE_URL
     const session = await getServerSession(authOptions)
-    const data = await getData(`http://localhost:3000/api/transaction?user_id=${session.user.id}`)
+    const data = await getData(`${baseUrl}/api/transaction?user_id=${session.user.id}`)
 
     console.log(data)
     return (

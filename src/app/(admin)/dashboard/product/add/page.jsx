@@ -13,6 +13,7 @@ const genders = ["Male", "Female", "Kid"]
 const categories = ["Top", "Bottom", "Shoes", "Hat", "Accessories"]
 
 export default function DashboardProductAddNew() {
+  const baseUrl = process.env.BASE_URL
   const { push } = useRouter()
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -58,7 +59,7 @@ export default function DashboardProductAddNew() {
     return Object.keys(newErrors).length === 0
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     console.log(description)
   }, [description])
 
@@ -79,7 +80,7 @@ export default function DashboardProductAddNew() {
       }
 
       try {
-        const res = await fetch("http://localhost:3000/api/products/add", {
+        const res = await fetch(`${baseUrl}/api/products/add`, {
           method: "POST",
           body: JSON.stringify(productData)
         })

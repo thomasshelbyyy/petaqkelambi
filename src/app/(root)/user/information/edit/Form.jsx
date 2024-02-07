@@ -19,6 +19,7 @@ const zipCodValidation = zip => {
 }
 
 export default function EditUserForm({ user, id }) {
+    const baseUrl = process.env.BASE_URL
     const [firstName, setFirstName] = useState(user?.firstName || "")
     const [lastName, setLastName] = useState(user?.lastName || "")
     const [username, setUsername] = useState(user?.username || "")
@@ -71,7 +72,7 @@ export default function EditUserForm({ user, id }) {
             }
 
             try {
-                const res = await fetch("http://localhost:3000/api/user/information/update", {
+                const res = await fetch(`${baseUrl}/api/user/information/update`, {
                     method: "PUT",
                     body: JSON.stringify({ id: id, data: data })
                 })

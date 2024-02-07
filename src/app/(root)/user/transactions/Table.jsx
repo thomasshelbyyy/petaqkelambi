@@ -14,7 +14,6 @@ const timestampToDate = (timestamp) => {
 
 export default function TransactionTable({ transactions }) {
     const date = timestampToDate(transactions[0].order_detail.order_date.seconds)
-    console.log({ transactions, date })
     return (
         <div>hello world</div>
     )

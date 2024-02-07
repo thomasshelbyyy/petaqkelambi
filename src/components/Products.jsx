@@ -3,10 +3,10 @@ import { getData } from "@/lib/fetch/service";
 import PaginationComponent from "@/app/(root)/product/[...slug]/Pagination";
 
 export default async function ProductsComponent({ params }) {
-    const getProducts = await getData('http://localhost:3000/api/products');
-    const reviews = await getData('http://localhost:3000/api/review')
+    const baseUrl = process.env.BASE_URL
+    const getProducts = await getData(`${baseUrl}/api/products`);
+    const reviews = await getData(`${baseUrl}/api/review`)
 
-    console.log({ getProducts })
     const products = getProducts.data
 
     const category = params.slug[1] || "top"

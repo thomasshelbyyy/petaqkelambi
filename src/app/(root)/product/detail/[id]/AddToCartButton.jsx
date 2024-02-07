@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react"
 import Swal from "sweetalert2"
 
 export default function AddToCartButton({ productId, productName, image, price }) {
+    const baseUrl = process.env.BASE_URL
     const { data: session, status } = useSession()
     const handleAddtoCart = async () => {
         if (status === "unauthenticated") {
@@ -19,7 +20,7 @@ export default function AddToCartButton({ productId, productName, image, price }
         } else {
             try {
                 const userId = session?.user?.id || ""
-                const res = await fetch("http://localhost:3000/api/user/cart/add", {
+                const res = await fetch(`${baseUrl}/api/user/cart/add`, {
                     method: "POST",
                     body: JSON.stringify({
                         userId: userId,

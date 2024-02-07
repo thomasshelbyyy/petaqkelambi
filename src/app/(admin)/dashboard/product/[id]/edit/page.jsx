@@ -1,13 +1,9 @@
+import { getData } from "@/lib/fetch/service"
 import EditProductForm from "./Form"
 
-const getData = async (id) => {
-    const res = await fetch("http://localhost:3000/api/products?id=" + id)
-
-    return res.json()
-}
-
 export default async function DashboardProductEdit({ params }) {
-    const product = await getData(params.id)
+    const baseUrl = process.env.BASE_URL
+    const product = await getData(`${baseUrl}/api/products?id=${params.id}`)
     return (
         <EditProductForm product={product.data} id={params.id} />
     )

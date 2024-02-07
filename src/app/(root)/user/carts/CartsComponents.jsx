@@ -17,6 +17,7 @@ const generateOrderId = () => {
 }
 
 export default function CartCard({ cart, user, userId }) {
+    const baseUrl = process.env.BASE_URL
     useEffect(() => {
         const snapScript = "https://app.sandbox.midtrans.com/snap/snap.js"
         const clientKey = process.env.NEXT_PUBLIC_CLIENT
@@ -58,7 +59,7 @@ export default function CartCard({ cart, user, userId }) {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch("http://localhost:3000/api/user/cart/remove", {
+                fetch(`${baseUrl}/api/user/cart/remove`, {
                     method: "DELETE",
                     body: JSON.stringify({ id: cart.id })
                 }).then(res => {
@@ -123,7 +124,7 @@ export default function CartCard({ cart, user, userId }) {
             userId: userId,
             productId: cart.productId
         }
-        const res = await fetch("http://localhost:3000/api/tokenizer", {
+        const res = await fetch(`${baseUrl}/api/tokenizer`, {
             method: "POST",
             body: JSON.stringify(data)
         })

@@ -4,10 +4,11 @@ import { Button } from "flowbite-react";
 import { useRouter } from "next/navigation";
 
 export default function DeleteReviewButton({ reviewId }) {
+    const baseUrl = process.env.BASE_URL
 
     const router = useRouter()
     const handleClick = async () => {
-        const res = await fetch("http://localhost:3000/api/review/delete", {
+        const res = await fetch(`${baseUrl}/api/review/delete`, {
             method: "DELETE",
             body: JSON.stringify({ reviewId })
         })
