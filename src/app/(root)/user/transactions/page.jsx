@@ -24,7 +24,7 @@ export const metadata = {
 export default async function TranactionsPage() {
     const baseUrl = process.env.BASE_URL
     const session = await getServerSession(authOptions)
-    const data = await getData(`${baseUrl}/api/transaction?user_id=${session.user.id}`)
+    const data = await getData(`${baseUrl}api/transaction?user_id=${session.user.id}`)
 
     return (
         <div className="min-h-screen w-full flex justify-center">

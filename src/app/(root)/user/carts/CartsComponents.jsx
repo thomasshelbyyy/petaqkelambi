@@ -59,7 +59,7 @@ export default function CartCard({ cart, user, userId }) {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`${baseUrl}/api/user/cart/remove`, {
+                fetch(`${baseUrl}api/user/cart/remove`, {
                     method: "DELETE",
                     body: JSON.stringify({ id: cart.id })
                 }).then(res => {
@@ -124,7 +124,7 @@ export default function CartCard({ cart, user, userId }) {
             userId: userId,
             productId: cart.productId
         }
-        const res = await fetch(`${baseUrl}/api/tokenizer`, {
+        const res = await fetch(`${baseUrl}api/tokenizer`, {
             method: "POST",
             body: JSON.stringify(data)
         })

@@ -71,7 +71,7 @@ export default function EditUserForm({ user, id }) {
             }
 
             try {
-                const res = await fetch(`${baseUrl}/api/user/information/update`, {
+                const res = await fetch(`${baseUrl}api/user/information/update`, {
                     method: "PUT",
                     body: JSON.stringify({ id: id, data: data })
                 })

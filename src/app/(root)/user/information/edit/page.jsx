@@ -4,7 +4,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 const getData = async (id) => {
     const baseUrl = process.env.BASE_URL
-    const res = await fetch(`${baseUrl}/api/user?id=${id}`, {
+    const res = await fetch(`${baseUrl}api/user?id=${id}`, {
         cache: "no-store"
     })
 

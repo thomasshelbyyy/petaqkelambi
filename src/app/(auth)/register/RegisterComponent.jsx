@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 const RegisterComponent = () => {
+    const baseUrl = process.env.BASE_URL
 
     const [isLoading, setIsLoading] = useState()
     const [error, setError] = useState("")
@@ -12,7 +13,7 @@ const RegisterComponent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
-        const res = await fetch('/api/auth/register', {
+        const res = await fetch(`${baseUrl}api/auth/register`, {
             method: "POST",
             body: JSON.stringify({
                 username: e.currentTarget.username.value,

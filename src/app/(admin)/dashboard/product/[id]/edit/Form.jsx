@@ -74,7 +74,7 @@ export default function EditProductForm({ product, id }) {
             }
 
             try {
-                const res = await fetch(`${baseUrl}/api/products/update`, {
+                const res = await fetch(`${baseUrl}api/products/update`, {
                     method: "PUT",
                     body: JSON.stringify(productData)
                 })

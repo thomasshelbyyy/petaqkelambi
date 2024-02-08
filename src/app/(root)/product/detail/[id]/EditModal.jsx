@@ -32,7 +32,7 @@ export default function EditReviewModal({ reviewId, userId, username, productId,
         }
 
         try {
-            const res = await fetch(`${baseUrl}/api/review/update`, {
+            const res = await fetch(`${baseUrl}api/review/update`, {
                 method: "PUT",
                 body: JSON.stringify(data)
             })

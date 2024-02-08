@@ -76,7 +76,7 @@ export default function DashboardProductAddNew() {
       }
 
       try {
-        const res = await fetch(`${baseUrl}/api/products/add`, {
+        const res = await fetch(`${baseUrl}api/products/add`, {
           method: "POST",
           body: JSON.stringify(productData)
         })

@@ -29,7 +29,7 @@ export default function RateModal({ userId, username, productId, productName }) 
         }
 
         try {
-            const res = await fetch(`${baseUrl}/api/review/add`, {
+            const res = await fetch(`${baseUrl}api/review/add`, {
                 method: "POST",
                 body: JSON.stringify(data)
             })

@@ -8,7 +8,7 @@ export default function DeleteReviewButton({ reviewId }) {
 
     const router = useRouter()
     const handleClick = async () => {
-        const res = await fetch(`${baseUrl}/api/review/delete`, {
+        const res = await fetch(`${baseUrl}api/review/delete`, {
             method: "DELETE",
             body: JSON.stringify({ reviewId })
         })

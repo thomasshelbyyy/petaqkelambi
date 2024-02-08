@@ -4,8 +4,8 @@ import PaginationComponent from "@/app/(root)/product/[...slug]/Pagination";
 
 export default async function ProductsComponent({ params }) {
     const baseUrl = process.env.BASE_URL
-    const getProducts = await getData(`${baseUrl}/api/products`);
-    const reviews = await getData(`${baseUrl}/api/review`)
+    const getProducts = await getData(`${baseUrl}api/products`);
+    const reviews = await getData(`${baseUrl}api/review`)
 
     const products = getProducts.data
 
