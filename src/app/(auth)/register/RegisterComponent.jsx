@@ -8,9 +8,7 @@ import { useState } from "react"
 
 const RegisterComponent = () => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-    const hardcodedEndpoint = "http://localhost:3000/api/auth/register"
     const apiEndpoint = baseUrl + "api/auth/register"
-    console.log({ apiEndpoint, hardcodedEndpoint })
 
     const [isLoading, setIsLoading] = useState()
     const [error, setError] = useState("")
