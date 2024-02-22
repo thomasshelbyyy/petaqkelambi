@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import RegisterComponent from "./RegisterComponent";
 
+export const metadata = {
+    title: "Petaqkelambi | Register"
+}
+
 function Loading() {
     return (
         <h1>Loading...</h1>

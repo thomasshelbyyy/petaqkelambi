@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import LoginComponent from "./LoginComponent";
 
+export const metadata = {
+    title: "Petaqkelambi | Login"
+}
+
 function Loading() {
     return <h1>Loading...</h1>
 }
