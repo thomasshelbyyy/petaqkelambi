@@ -8,7 +8,9 @@ const ProductLayout = ({ children }) => {
     return (
         <div className="w-screen ">
             <Navbar />
-            {children}
+            <div className="pt-12">
+                {children}
+            </div>
             <Footer />
         </div>
     )

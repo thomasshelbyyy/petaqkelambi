@@ -23,7 +23,7 @@ export default async function ProductsComponent({ params }) {
 
 
     return (
-        <div className="w-11/12 md:w-3/4 min-h-screen bg-white p-4 rounded ml-4">
+        <div className="w-11/12 md:w-full min-h-screen bg-white p-4 rounded ml-4">
             <h2 className="text-lg font-bold mb-4">Daftar Produk</h2>
             <div className="flex flex-wrap gap-4 min-h-40">
                 {/* CARD */}

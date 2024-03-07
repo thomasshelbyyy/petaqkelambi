@@ -1,128 +1,154 @@
 "use client"
 
-import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSession, signIn, signOut } from "next-auth/react"
-import { Dropdown } from 'flowbite-react'
-import { usePathname } from 'next/navigation'
-import { ShoppingCartIcon } from '@heroicons/react/24/solid'
+import { usePathname, useRouter } from 'next/navigation'
+import { MagnifyingGlassIcon, ShoppingCartIcon } from '@heroicons/react/24/solid'
+import { Dropdown, TextInput } from 'flowbite-react'
+import { useState } from 'react'
+import { noProfile } from '@/assets/images'
+
+const categories = ["top", "bottom", "shoes", "hat", "accessories"]
 
 export default function Navbar() {
-    const pathname = usePathname()
-    const { data: session, status } = useSession()
-    return (
-        <Disclosure as="nav" className="bg-gray-800">
-            {({ open }) => (
-                <>
-                    <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                        <div className="relative flex h-16 items-center justify-between">
-                            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                                {/* Mobile menu button*/}
-                                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                                    <span className="absolute -inset-0.5" />
-                                    <span className="sr-only">Open main menu</span>
-                                    {open ? (
-                                        <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                                    ) : (
-                                        <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                                    )}
-                                </Disclosure.Button>
-                            </div>
-                            <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                                <div className="flex flex-shrink-0 items-center">
-                                    <p className="italic text-lg text-white">petaqKelambi</p>
-                                </div>
-                                <div className="hidden sm:ml-6 sm:block">
-                                    <div className="flex space-x-4">
-                                        <Dropdown label="gender" className='text-white'>
-                                            <Dropdown.Item>
-                                                <Link href="/product/male">Male</Link>
-                                            </Dropdown.Item>
-                                            <Dropdown.Item>
-                                                <Link href="/product/female">Female</Link>
-                                            </Dropdown.Item>
-                                            <Dropdown.Item>
-                                                <Link href="/product/kids">Kids</Link>
-                                            </Dropdown.Item>
-                                        </Dropdown>
-                                        {session?.user?.role === "admin" && (
-                                            <Link
-                                                href="/dashboard"
-                                                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                                            >
-                                                Dashboard
-                                            </Link>
-                                        )}
-                                        {session?.user && (
-                                            <>
-                                                <Link
-                                                    href="/user/information"
-                                                    className={`rounded-md px-3 py-2 text-sm font-medium ${pathname === "/user/information" || pathname === "/user/transactions" ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white"}`}
-                                                >
-                                                    Profile
-                                                </Link>
-                                                <Link
-                                                    href="/user/carts"
-                                                    className={`rounded-md px-3 py-2 text-sm font-medium ${pathname === "/user/carts" ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white"}`}
-                                                >
-                                                    <ShoppingCartIcon className="w-6" />
-                                                </Link>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                {status === "authenticated" ? (
-                                    <div className="flex">
-                                        <p>{session.user.email}</p>
-                                        <button type="button" className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                            <BellIcon className="h-6 w-6" aria-hidden="true" />
-                                        </button>
-                                        <button className="bg-white text-black px-2 py-1 rounded-md" onClick={() => signOut()}>Logout</button>
-                                    </div>
-                                ) : (
-                                    <button className="bg-white text-black px-2 py-1 rounded-md" onClick={() => signIn()}>Login</button>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+  const pathname = usePathname()
+  const router = useRouter()
 
-                    <Disclosure.Panel className="sm:hidden">
-                        <div className="space-y-1 px-2 pb-3 pt-2">
-                            {session?.user?.role === "admin" && (
-                                <Disclosure.Button
-                                    as="a"
-                                    href="/dashboard"
-                                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                                >
-                                    Dashboard
-                                </Disclosure.Button>
-                            )}
-                            {session?.user && (
-                                <>
-                                    <Disclosure.Button
-                                        as="a"
-                                        href="/user/information"
-                                        className={`block rounded-md px-3 py-2 text-base font-medium ${pathname === "/user/information" || pathname === "/user/transactions" ? "text-gray-300 hover:bg-gray-700 hover:text-white" : "bg-gray-900 text-white"} `}
-                                    >
-                                        Profile
-                                    </Disclosure.Button>
-                                    <Disclosure.Button
-                                        as="a"
-                                        href="/user/carts"
-                                        className={`block rounded-md px-3 py-2 text-base font-medium ${pathname === "/user/carts" ? "text-gray-300 hover:bg-gray-700 hover:text-white" : "bg-gray-900 text-white"} `}
-                                    >
-                                        <ShoppingCartIcon className="w-6" />
-                                    </Disclosure.Button>
-                                </>
-                            )}
-                        </div>
-                    </Disclosure.Panel>
-                </>
-            )}
-        </Disclosure>
-    )
+  const { data: session, status } = useSession()
+  const [inputValue, setInputValue] = useState("")
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
+
+  const closeSidebar = () => setIsSidebarOpen(false)
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    router.push(`/search?query=${encodeURIComponent(inputValue)}`)
+  }
+
+  return (
+    <nav className="flex justify-between bg-gray-800 text-white fixed w-screen z-50">
+      <div className="flex justify-between w-full px-6 py-4">
+
+        <div className="flex gap-4">
+          <button className="md:hidden w-4" onClick={toggleSidebar}>
+            <Bars3Icon />
+          </button>
+
+          <div className="hidden md:flex md:gap-4 ">
+            <a href="#" className="text-xl font-semibold italic">petaklemabi</a>
+
+            <Dropdown
+              label={
+                <p className="text-sm">Male Product</p>
+              }
+              size="sm"
+              inline
+            >
+              {categories.map(category => (
+                <Dropdown.Item as={Link} href={`/product/male/${category}`} key={category}>{category}</Dropdown.Item>
+              ))}
+            </Dropdown>
+            <Dropdown
+              label={
+                <p className="text-sm">Female Product</p>
+              }
+              size="sm"
+              inline
+            >
+              {categories.map(category => (
+                <Dropdown.Item as={Link} href={`/product/female/${category}`} key={category}>{category}</Dropdown.Item>
+              ))}
+            </Dropdown>
+            <Dropdown
+              label={
+                <p className="text-sm">Kids Product</p>
+              }
+              size="sm"
+              inline
+            >
+              {categories.map(category => (
+                <Dropdown.Item as={Link} href={`/product/kid/${category}`} key={category}>{category}</Dropdown.Item>
+              ))}
+            </Dropdown>
+          </div>
+        </div>
+
+        <div className="md:hidden text-xl italic">petaklemabi</div>
+
+        <div className="flex">
+
+          {status === "authenticated" ? (
+
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={
+                <Image alt="user profile" src={noProfile} className="w-10 h-10 rounded-full cursor-pointer" />
+              }
+            >
+              <Dropdown.Header>
+                <span className="block text-sm">{session.user.username}</span>
+                <span className="block truncate text-sm font-medium">{session.user.email}</span>
+              </Dropdown.Header>
+              {session.user.role === "admin" && (
+                <Dropdown.Item as={Link} href="/dashboard">Dashboard</Dropdown.Item>
+              )}
+              <Dropdown.Item as={Link} href="/user/cart">Cart</Dropdown.Item>
+              <Dropdown.Item as={Link} href="/user/information">Profile</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={() => signOut()}>Sign out</Dropdown.Item>
+            </Dropdown>
+          ) : (
+            <button className="px-3 py-2 bg-gray-50 text-black rounded-md" onClick={() => signIn()}>Login</button>
+          )}
+        </div>
+      </div>
+
+      {/* SIDEBAR */}
+      <div className={`w-full   h-screen fixed flex ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transition `} id="sidebar">
+        <div className="w-3/4 h-full px-4 py-6 bg-gray-800">
+          <h1 className="text-xl italic font-semibold">Petaqkelambi</h1>
+          <hr />
+          <div className="py-1">
+            <h2 className="font-semibold">Male Products</h2>
+            <ul className="ml-3">
+              {categories.map((category, id) => (
+                <li className="hover:text-gray-100" key={id}>
+                  <Link href={`/products/male/${category}`}>{category}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="py-1">
+            <h2 className="font-semibold">Female Products</h2>
+            <ul className="ml-3">
+              {categories.map((category, id) => (
+                <li className="hover:text-gray-100" key={id}>
+                  <Link href={`/products/female/${category}`}>{category}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="py-1">
+            <h2 className="font-semibold">Kid Products</h2>
+            <ul className="ml-3">
+              {categories.map((category, id) => (
+                <li className="hover:text-gray-100" key={id}>
+                  <Link href={`/products/kid/${category}`}>{category}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <button className=" ml-3 mt-6 h-fit" onClick={closeSidebar}>
+          <XMarkIcon className="w-6" />
+        </button>
+      </div>
+    </nav>
+  )
 }

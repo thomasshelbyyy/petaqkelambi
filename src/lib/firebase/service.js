@@ -23,6 +23,17 @@ export async function retrieveDataById(collectionName, id) {
     return data
 }
 
+export async function retrieveDataByQuery(collectionName, queryValue) {
+    const q = query(collection(firestore, collectionName), where("name", "==", queryValue))
+    const snapshot = await getDocs(q)
+
+    const data = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data
+    }))
+    return data
+}
+
 export async function register(data) {
     const q = query(collection(firestore, "users"), where("email", "==", data.email))
     const snapshot = await getDocs(q)
