@@ -1,5 +1,6 @@
 "use client"
 
+import { Spinner } from "flowbite-react";
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -19,7 +20,7 @@ const zipCodValidation = zip => {
 }
 
 export default function EditUserForm({ user, id }) {
-    const baseUrl = process.env.BASE_URL
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
     const [firstName, setFirstName] = useState(user?.firstName || "")
     const [lastName, setLastName] = useState(user?.lastName || "")
     const [username, setUsername] = useState(user?.username || "")
@@ -29,8 +30,9 @@ export default function EditUserForm({ user, id }) {
     const [street, setStreet] = useState(user?.address?.street || "")
     const [zipCode, setZipCode] = useState(user?.address?.zipCode || "")
     const [errors, setErrors] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
 
-    const { push } = useRouter()
+    const router = useRouter()
 
     const validateForm = () => {
         const newErrors = {}
@@ -55,6 +57,7 @@ export default function EditUserForm({ user, id }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setIsLoading(true)
         const isFormValid = validateForm()
         if (isFormValid) {
             const data = {
@@ -79,7 +82,7 @@ export default function EditUserForm({ user, id }) {
                 const response = await res.json()
 
                 if (res.ok) {
-                    alert("user updated")
+                    router.replace("/user/information")
                 } else {
                     alert("failed to update user")
                 }
@@ -87,6 +90,7 @@ export default function EditUserForm({ user, id }) {
                 console.log(error)
             }
         }
+        setIsLoading(false)
     }
 
     return (
@@ -102,6 +106,7 @@ export default function EditUserForm({ user, id }) {
                             id="floating_first_name"
                             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                             placeholder=" "
+                            disabled={isLoading}
                         />
                         <label
                             htmlFor="floating_first_name"
@@ -111,12 +116,12 @@ export default function EditUserForm({ user, id }) {
                         </label>
                     </div>
                     <div className="relative z-0 w-full mb-5 group">
-                        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled={isLoading} />
                         <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-800 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
                     </div>
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} id="floating_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} id="floating_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required disabled={isLoading} />
                     <label htmlFor="floating_password" className="peer-focus:font-medium absolute text-sm text-gray-800 dark:text-gray-800 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
@@ -124,7 +129,7 @@ export default function EditUserForm({ user, id }) {
                     <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-800 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
-                    <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} id="floating_phone" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 ${errors.phone ? "border-red-600 focus:border-red-600 text-red-600" : "focus:border-blue-600"} focus:outline-none focus:ring-0  peer`} placeholder=" " />
+                    <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} id="floating_phone" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 ${errors.phone ? "border-red-600 focus:border-red-600 text-red-600" : "focus:border-blue-600"} focus:outline-none focus:ring-0  peer`} placeholder=" " disabled={isLoading} />
                     <label htmlFor="floating_phone" className={`peer-focus:font-medium absolute text-sm  ${errors.phone ? " peer-focus:text-red-600" : "text-gray-800 peer-focus:text-blue-600"} duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Phone number (08xx-xxxx-xxxx)</label>
                 </div>
             </div>
@@ -132,26 +137,33 @@ export default function EditUserForm({ user, id }) {
                 <h1 className="font-semibold py-3 text-lg">Addres</h1>
                 <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-5 group">
-                        <input type="text" id="floating_state" value={state} onChange={(e) => setState(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" id="floating_state" value={state} onChange={(e) => setState(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled={isLoading} />
                         <label htmlFor="floating_state" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-800 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">State</label>
                     </div>
                     <div className="relative z-0 w-full mb-5 group">
-                        <input type="text" id="floating_city" value={city} onChange={(e) => setCity(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" id="floating_city" value={city} onChange={(e) => setCity(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled={isLoading} />
                         <label htmlFor="floating_city" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-800 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">City</label>
                     </div>
                 </div>
                 <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-5 group">
-                        <input type="text" id="floating_street" value={street} onChange={(e) => setStreet(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" id="floating_street" value={street} onChange={(e) => setStreet(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled={isLoading} />
                         <label htmlFor="floating_street" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-800 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Street</label>
                     </div>
                     <div className="relative z-0 w-full mb-5 group">
-                        <input type="number" id="floating_zipcode" value={zipCode} onChange={(e) => setZipCode(e.target.value)} className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 ${errors.zipcode ? "border-red-600 focus:border-red-600 text-red-600" : "focus:border-blue-600"} focus:outline-none focus:ring-0  peer`} placeholder=" " />
+                        <input type="number" id="floating_zipcode" value={zipCode} onChange={(e) => setZipCode(e.target.value)} className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 ${errors.zipcode ? "border-red-600 focus:border-red-600 text-red-600" : "focus:border-blue-600"} focus:outline-none focus:ring-0  peer`} placeholder=" " disabled={isLoading} />
                         <label htmlFor="floating_zipcode" className={`peer-focus:font-medium absolute text-sm  ${errors.zipcode ? " peer-focus:text-red-600" : "text-gray-800 peer-focus:text-blue-600"} duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>Zip Code</label>
                     </div>
                 </div>
             </div>
-            <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" disabled={isLoading}>
+                {isLoading ? (
+                    <>
+                        <Spinner size="sm" />
+                        <span className="ml-1">Loading...</span>
+                    </>
+                ) : "Submit"}
+            </button>
         </form>
 
     )

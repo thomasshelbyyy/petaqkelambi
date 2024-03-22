@@ -7,13 +7,14 @@ import { getDownloadURL, ref } from "firebase/storage"
 import { storage } from "@/lib/firebase/init"
 import { useRouter } from "next/navigation"
 import { updateProduct, uploadImage } from "@/lib/firebase/service"
+import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 
 const genders = ["Male", "Female", "Kid"]
 const categories = ["Top", "Bottom", "Shoes", "Hat", "Accessories"]
 
 export default function EditProductForm({ product, id }) {
     const baseUrl = process.env.BASE_URL
-    const { push } = useRouter()
+    const { push, back } = useRouter()
 
     const onDrop = useCallback((acceptedFiles) => {
         const newFiles = acceptedFiles.map(file => Object.assign(file, {
@@ -95,10 +96,17 @@ export default function EditProductForm({ product, id }) {
         setIsLoading(false)
     }
 
+    const handleReturn = () => {
+        back()
+    }
+
 
     return (
         <div>
-            <h1 className="text-lg font-semibold text-indigo-300 mb-4">Add new product</h1>
+            <div className="flex items-center">
+                <button onClick={handleReturn} className="p-2 rounded-full border border-white hover:border-gray-700"><ArrowLeftIcon className="w-6" /></button>
+                <h1 className="text-lg font-semibold text-indigo-300 mb-4 ml-8">Add new product</h1>
+            </div>
             <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
 
                 <div className="mb-5">

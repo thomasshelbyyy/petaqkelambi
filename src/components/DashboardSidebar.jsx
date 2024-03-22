@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function DashboardSidebar() {
     return (
-        <div className="bg-gray-800 text-white w-64 h-screen fixed left-0 hidden md:block"></div>
+        <div className="bg-gray-800 text-white w-64 h-screen fixed left-0 hidden md:block z-40"></div>
         // <div id="menu" className="bg-white/10 col-span-3 rounded-lg p-4 ">
         //     <h1 className="font-bold text-lg lg:text-3xl bg-gradient-to-br from-white via-white/50 to-transparent bg-clip-text text-transparent"> Dashboard<span className="text-indigo-400">.</span></h1>
         //     <p className="text-slate-400 text-sm mb-2">Welcome back,</p>

@@ -27,7 +27,8 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-quill": "^2.0.0",
-    "sweetalert2": "^11.10.4"
+    "sweetalert2": "^11.10.4",
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

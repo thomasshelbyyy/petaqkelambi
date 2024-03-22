@@ -36,7 +36,7 @@ export default async function UserInformationPage() {
                     <h2 className="text-2xl font-bold mb-4">General Information</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <p className="text-gray-600">Name: {user.name ? user.name : '-'}</p>
+                            <p className="text-gray-600">Name: {user.firstName ? user.firstName : ""}  {user.lastName ? user.lastName : ""}</p>
                             <p className="text-gray-600">Email: {user.email}</p>
                         </div>
                         <div className="md:mt-0 mt-4">

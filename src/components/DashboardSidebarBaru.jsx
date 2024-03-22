@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export default function DashboardSidebar({ isSidebarOpen }) {
     return (
-        <div className={`w-72 h-screen pt-14 fixed bg-gray-900 flex flex-col md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transition`}>
+        <div className={`w-72 h-screen pt-14 fixed bg-gray-900 flex flex-col md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transition z-40`}>
             <div className="p-4 text-lg w-full hover:bg-gray-600">
                 <Link href="/dashboard" className="font-semibold flex gap-3"><HomeIcon className="w-8 h-8" />HOME</Link>
             </div>

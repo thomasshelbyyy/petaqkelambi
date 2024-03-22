@@ -5,7 +5,7 @@ export default function DashboardLayout({ children }) {
     return (
         <div>
             <DashboardNavbar />
-            <div className="pt-14 pb-4 md:pl-96">
+            <div className="pt-16 pb-4 md:pl-96">
                 {children}
             </div>
         </div>

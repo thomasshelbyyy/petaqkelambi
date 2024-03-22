@@ -10,10 +10,10 @@ export default async function DashboardProductPage() {
         <div className="p-4">
             <h1 className="text-xl font-semibold text-indigo-400">Manage Product</h1>
 
-            <div className="flex gap-8 my-3">
-                <Link href="/dashboard/product/add" className="text-lg px-2 py-1 bg-sky-600 hover:bg-sky-800 text-white rounded-md">Add new product</Link>
-                <div className="flex items-center">
-                    <p>filter by catgeory:</p>
+            <div className="flex flex-col lg:flex-row gap-8 my-3">
+                <Link href="/dashboard/product/add" className="text-lg px-3 py-2 w-fit bg-sky-600 hover:bg-sky-800 text-white rounded-md">Add new product</Link>
+                <div className="flex items-center text-gray-700">
+                    <p>filter by catgeory: </p>
                     <select name="category" id="category" className="text-gray-700 rounded-md px-2 py-1">
                         <option value="all">All</option>
                         <option value="all">Top</option>
@@ -22,7 +22,7 @@ export default async function DashboardProductPage() {
                     </select>
                 </div>
                 <div className="flex items-center">
-                    <p>filter by gender:</p>
+                    <p>filter by gender: </p>
                     <select name="category" id="category" className="text-gray-700 rounded-md px-2 py-1">
                         <option value="all">All</option>
                         <option value="all">Male</option>
