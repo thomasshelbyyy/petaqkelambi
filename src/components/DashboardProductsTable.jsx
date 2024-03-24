@@ -3,23 +3,52 @@
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function DashboardProductsTable({ products }) {
 
-    const [isLoading, setIsLoading] = useState(false)
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-    const handleDelete = async (id) => {
+    const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
+
+    const handleDelete = (id) => {
         setIsLoading(true)
-        try {
-            await fetch(`http://localhost:3000/api/products/delete`, {
-                method: "DELETE",
-                body: JSON.stringify({ id })
-            })
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                try {
+                    const response = await fetch(`${baseUrl}api/products/delete`, {
+                        method: "DELETE",
+                        body: JSON.stringify({ id })
+                    })
+                    return response.json()
+                } catch (error) {
+                    Swal.showValidationMessage(`Request failed: ${error}`)
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (result.value.status) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        icon: "success",
+                        text: "The product has been deleted"
+                    })
+                    router.refresh()
+                }
+            }
             setIsLoading(false)
-        } catch (error) {
-            console.log(error)
-        }
+        })
     }
 
     return (
