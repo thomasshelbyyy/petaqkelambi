@@ -23,16 +23,13 @@ export default async function UserInformationPage() {
     const data = await getData(session.user.id)
     const user = data.data
     return (
-        <div className="container mx-auto mt-8 flex flex-col lg:flex-row items-center lg:items-start">
-            {/* Bagian Kiri */}
-            <div className="lg:w-1/4 mb-8 lg:mb-0 pr-4">
-                <Image width={100} height={100} src={user.image ? user.image : noProfile} alt={user.username} className="w-32 h-32 object-cover rounded-full mb-4" />
-                <p className="text-lg font-semibold">{user.username}</p>
-            </div>
-
-            {/* Bagian Kanan */}
+        <div className="container mx-auto mt-8 flex flex-col items-center">
             <div className="lg:w-3/4">
-                <section className="mb-8 p-4 bg-gray-100 rounded-lg">
+                <div className=" flex flex-col items-center mb-4">
+                    <Image width={100} height={100} src={user.image ? user.image : noProfile} alt={user.username} className="w-32 h-32 object-cover rounded-full mb-4" />
+                    <p className="text-lg text-center font-semibold">{user.username}</p>
+                </div>
+                <section className="mb-8 p-4 bg-gray-200 rounded-lg">
                     <h2 className="text-2xl font-bold mb-4">General Information</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -45,7 +42,7 @@ export default async function UserInformationPage() {
                     </div>
                 </section>
 
-                <section className="mb-8 p-4 bg-gray-100 rounded-lg">
+                <section className="mb-8 p-4 bg-gray-200 rounded-lg">
                     <h2 className="text-2xl font-bold mb-4">Address</h2>
                     <div>
                         <p className="text-gray-600">Street: {user.address ? user.address.street : '-'} </p>
@@ -55,7 +52,7 @@ export default async function UserInformationPage() {
                     </div>
                 </section>
 
-                <section className="mb-8 p-4 bg-gray-100 rounded-lg">
+                <section className="mb-8 p-4 bg-gray-200 rounded-lg">
                     <h2 className="text-2xl font-bold mb-4">Change Password</h2>
                     <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded">
                         Change Password
